@@ -1,5 +1,9 @@
-import { randomBytes } from "node:crypto"
+import {
+  CACHE_TTL_SECONDS,
+  MAX_CODE_GENERATION_ATTEMPTS,
+} from "../constants/url"
 import { AppError } from "../utils/AppError"
+import { buildShortUrl, generateShortCode, normalizeUrl } from "../utils/url"
 
 type UrlRecord = {
   shortCode: string
@@ -26,26 +30,6 @@ type UrlServiceDependencies = {
   cache: UrlCache
   baseUrl: string
 }
-
-const SHORT_CODE_LENGTH = 8
-const MAX_CODE_GENERATION_ATTEMPTS = 5
-const CACHE_TTL_SECONDS = 60 * 60
-
-const normalizeUrl = (value: string) => {
-  const url = new URL(value)
-
-  if (url.protocol !== "http:" && url.protocol !== "https:") {
-    throw new AppError("url must be a valid http/https URL", 400)
-  }
-
-  return url.href
-}
-
-const buildShortUrl = (baseUrl: string, shortCode: string) =>
-  new URL(shortCode, `${baseUrl.replace(/\/+$/, "")}/`).href
-
-const generateShortCode = () =>
-  randomBytes(6).toString("base64url").slice(0, SHORT_CODE_LENGTH)
 
 export const createUrlService = ({
   repository,
