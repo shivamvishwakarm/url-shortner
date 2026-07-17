@@ -1,11 +1,13 @@
 import express from 'express'
 import env from "./config/env"
 import urlRoute from "./Router/url.router"
+import docsRouter from "./Router/docs.router"
 import { errorHandler } from './middleware/error.middleware';
 
 const app = express()
 const PORT = env.PORT
 
+app.use("/docs", docsRouter)
 app.use(urlRoute)
 
 
