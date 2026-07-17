@@ -1,0 +1,21 @@
+
+
+services:
+  postgresql:
+    image: "postgres:18-alpine"
+    env_file:
+      .env
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - postgres-db:/var/lib/postgresql/data \postgres:NEW
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U shivam -d url_shortner']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+
+volumes:
+  postgres-db:
