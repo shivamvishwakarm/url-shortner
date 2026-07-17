@@ -7,13 +7,15 @@ import { errorHandler } from './middleware/error.middleware';
 const app = express()
 const PORT = env.PORT
 
+app.use(express.json())
 app.use("/docs", docsRouter)
-app.use(urlRoute)
 
 
 app.get('/health', (_,res)=> {
     res.send({status: "Healthy", timestamp: new Date().toISOString()}).status(200)
 })
+
+app.use(urlRoute)
 
 
 
