@@ -9,7 +9,7 @@ export function validate<T extends ZodType>(schema: T, source: source = 'body'):
   return (req: Request, res: Response, next: NextFunction) => {
 
     try {
-        const validationResult = schema.parse(req.body)
+        const validationResult = schema.parse(req[source])
         req[source]  = validationResult
         next()
 

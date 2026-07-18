@@ -19,9 +19,10 @@ model UrlShortner {
   originalUrl   String    @map("original_url") @db.Text
   isCustomAlias Boolean   @default(false) @map("is_custom_alias")
   createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
+  updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at")
   deletedAt     DateTime? @map("deleted_at")
 
-  @@index([originalUrl, shortCode])
+  @@unique([shortCode])
+  @@unique([originalUrl])
   @@map("url_shortener")
 }
