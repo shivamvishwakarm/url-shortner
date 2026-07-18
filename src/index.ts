@@ -22,8 +22,8 @@ app.use(express.json())
 app.use("/docs", docsRouter)
 
 
-app.get('/health', (_,res)=> {
-    res.send({status: "Healthy", timestamp: new Date().toISOString()}).status(200)
+app.get('/health', (_, res) => {
+    res.send({ status: "Healthy", timestamp: new Date().toISOString() }).status(200)
 })
 
 app.use(urlRoute)
@@ -32,6 +32,6 @@ app.use(urlRoute)
 
 app.use(errorHandler)
 
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log("Server is running PORT", PORT)
 })
